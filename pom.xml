@@ -9,6 +9,7 @@
         <module>product-service</module>
         <module>api-common</module>
         <module>order-service</module>
+        <module>pay-service</module>
     </modules>
 
     <parent>

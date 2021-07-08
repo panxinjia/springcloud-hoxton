@@ -1,0 +1,16 @@
+server:
+  port: 6000
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost
+    appname: pay-service
+    app-group-name: pay-service
+
+
