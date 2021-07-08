@@ -1,0 +1,19 @@
+server:
+  port: 8000
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://node101:8001/eureka/,http://node102:8002/eureka/
+  server:
+    enable-self-preservation: false
+    # 服务剔除时间
+    eviction-interval-timer-in-ms: 10000
+  instance:
+    appname: eureka-server
+    hostname: node100
+    app-group-name: eureka-server
+spring:
+  application:
+    name: eureka-server
