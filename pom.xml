@@ -12,6 +12,7 @@
         <module>pay-service</module>
     </modules>
 
+    <!--SpringBoot版本控制-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -58,6 +59,7 @@
     </dependencies>
 
 
+    <!--Spring-Cloud 版本控制-->
     <dependencyManagement>
         <dependencies>
             <dependency>
