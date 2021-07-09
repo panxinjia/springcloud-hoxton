@@ -1,5 +1,5 @@
 server:
-  port: 7000
+  port: 7003
 
 
 eureka:
@@ -9,6 +9,3 @@ eureka:
 spring:
   application:
     name: product-service
-
-  profiles:
-    active: peer2

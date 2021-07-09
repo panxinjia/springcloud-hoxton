@@ -3,20 +3,26 @@ package com.xiaopantx.order.service;
 import com.xiaopantx.pojo.Order;
 import com.xiaopantx.pojo.Product;
 import com.xiaopantx.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    @Value("${server.port}")
+    private Integer port;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -35,7 +41,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order info(Integer id) {
-        return null;
+        return Order.builder()
+                .id(id)
+                .orderNo("order-00" + id)
+                .orderAddress("中国：" + this.port)
+                .productList(this.productList())
+                .build();
     }
 
     @Override
@@ -51,6 +62,25 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean remove(Integer id) {
         return false;
+    }
+
+    public List<Product> productList() {
+        ResponseEntity<List> resp = restTemplate.getForEntity("http://product-service/product/list", List.class);
+        return resp.getBody();
+    }
+
+    public List<Product> productListLoadBalancerClient() {
+        ServiceInstance instance = loadBalancerClient.choose("product-service");
+        if (instance == null) {
+            return null;
+        }
+
+        StringBuilder url = new StringBuilder();
+        url.append("http://").append(instance.getHost()).append(":").append(instance.getPort()).append("/product/list");
+        log.info("product service url => {}", url.toString());
+
+        ResponseEntity<List> resp = restTemplate.getForEntity(url.toString(), List.class);
+        return resp.getBody();
     }
 
 
