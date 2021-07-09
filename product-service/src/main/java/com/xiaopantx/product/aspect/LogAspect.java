@@ -17,8 +17,11 @@ public class LogAspect {
     @Value(value = "${server.port}")
     private Integer port;
 
+    @Value(value = "${eureka.instance.hostname}")
+    private String productService;
+
     @Before("execution(* com.xiaopantx.product.service.*.*(..))")
     public void before() {
-        log.info("service port => {}", port);
+        log.info(productService + ":" + port);
     }
 }

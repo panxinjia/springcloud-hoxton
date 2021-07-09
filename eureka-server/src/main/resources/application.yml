@@ -12,3 +12,4 @@ eureka:
     appname: eureka-server
     hostname: localhost
     app-group-name: eureka-server
+

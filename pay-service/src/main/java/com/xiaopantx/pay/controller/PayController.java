@@ -15,9 +15,12 @@ public class PayController {
     @Value("${server.port}")
     private Integer port;
 
+    @Value("${eureka.instance.hostname}")
+    private String hostName;
+
     @PutMapping(value = "payment")
     public boolean payment(@RequestParam(value = "price") Double price) {
-        log.info("端口 => {}, 支付订单 => {} ¥", this.port, price);
+        log.info(hostName + ":" + port + "/pay/payment?price" + price);
         return true;
     }
 }

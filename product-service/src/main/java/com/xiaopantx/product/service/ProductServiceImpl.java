@@ -43,7 +43,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(Product product) {
-        return null;
+        Product prod = this.info(product.getId());
+        if (prod == null) {
+            return null;
+        }
+        int index = this.productList.indexOf(product);
+        this.productList.set(index, product);
+        return prod;
     }
 
     @Override
