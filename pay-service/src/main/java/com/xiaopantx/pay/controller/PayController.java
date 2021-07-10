@@ -18,7 +18,7 @@ public class PayController {
     @Value("${eureka.instance.hostname}")
     private String hostName;
 
-    @PutMapping(value = "payment")
+    @GetMapping(value = "payment")
     public boolean payment(@RequestParam(value = "price") Double price) {
         log.info(hostName + ":" + port + "/pay/payment?price" + price);
         return true;

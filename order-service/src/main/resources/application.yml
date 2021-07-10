@@ -23,3 +23,5 @@ spring:
   boot:
     admin:
       context-path: /admin
+  application:
+    name: order-service

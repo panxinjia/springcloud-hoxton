@@ -2,15 +2,15 @@ server:
   port: 6002
 
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://node101:8001/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    hostname: node102
-    appname: pay-service
-    app-group-name: pay-service
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://node101:8001/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true
+#  instance:
+#    hostname: node102
+#    appname: pay-service
+#    app-group-name: pay-service
 
 

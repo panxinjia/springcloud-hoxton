@@ -13,4 +13,8 @@ eureka:
     appname: pay-service
     app-group-name: pay-service
 
-
+spring:
+  application:
+    name: pay-service
+  profiles:
+    active: peer2

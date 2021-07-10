@@ -5,11 +5,13 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://node100:8000/eureka/
+      #defaultZone: http://node100:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/
   instance:
-    hostname: node100
+    # hostname: node100
     appname: product-service
     app-group-name: product-service
+    hostname: localhost
 spring:
   application:
     name: product-service

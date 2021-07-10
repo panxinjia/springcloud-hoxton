@@ -41,11 +41,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order info(Integer id) {
+        // this.services();
+        this.pay2();
         return Order.builder()
                 .id(id)
                 .orderNo("order-00" + id)
                 .orderAddress("中国：" + this.port)
-                .productList(this.productList())
+                //.productList(this.productList())
+                .productList(this.productListLoadBalancerClient())
                 .build();
     }
 
@@ -77,12 +80,12 @@ public class OrderServiceImpl implements OrderService {
 
         StringBuilder url = new StringBuilder();
         url.append("http://").append(instance.getHost()).append(":").append(instance.getPort()).append("/product/list");
-        log.info("product service url => {}", url.toString());
+        // log.info("product service url => {}", url.toString());
+        System.out.println("product-service url: " + url.toString());
 
         ResponseEntity<List> resp = restTemplate.getForEntity(url.toString(), List.class);
         return resp.getBody();
     }
-
 
     public List<Product> productListByDiscoveryClient() {
         StringBuilder url = new StringBuilder("http://");
@@ -109,5 +112,28 @@ public class OrderServiceImpl implements OrderService {
 
 
         return null;
+    }
+
+     public boolean pay2() {
+         ResponseEntity<Boolean> resp = restTemplate.getForEntity("http://pay-service/pay/payment?price=1", Boolean.class);
+         return resp.getBody();
+     }
+
+
+
+    public boolean pay() {
+
+        ServiceInstance instance = loadBalancerClient.choose("pay-service");
+
+        String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/pay/payment?price=1";
+        System.out.println("pay-service url: " + url.toString());
+        ResponseEntity<Boolean> resp = restTemplate.getForEntity(url, Boolean.class);
+        return resp.getBody();
+    }
+
+    public void services() {
+        List<String> services = discoveryClient.getServices();
+        services.stream()
+                .forEach(System.out::println);
     }
 }
