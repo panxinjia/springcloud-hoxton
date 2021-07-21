@@ -119,8 +119,6 @@ public class OrderServiceImpl implements OrderService {
          return resp.getBody();
      }
 
-
-
     public boolean pay() {
 
         ServiceInstance instance = loadBalancerClient.choose("pay-service");
